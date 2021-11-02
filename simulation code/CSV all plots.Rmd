@@ -1,0 +1,98 @@
+```{r PL}
+model <- 'PL'
+both <- TRUE
+fills <- c('mediumorchid', 'darkmagenta') #both then g1
+
+if (both){
+  representation_results <- read.csv('./cluster_runs/PL_both_a 1 _ 0.3 _minority_scatterplot.csv')
+} else {
+    representation_results <- read.csv('./cluster_runs/PL_g1_a 1 _ 0.3 _minority_scatterplot.csv')
+}
+representation_results$S <- as.factor(x=representation_results$S)
+minmeanmax <- cbind(
+  aggregate(group1wins ~ S, representation_results, FUN=min),
+  aggregate(group1wins ~ S, representation_results, FUN=mean)[2],
+  aggregate(group1wins ~ S, representation_results, FUN=max)[2],
+  aggregate(group1wins ~ S, representation_results, FUN=quantile, probs=0.05)[2],
+  aggregate(group1wins ~ S, representation_results, FUN=quantile, probs=0.95)[2],
+  aggregate(average_ballot_length_group1 ~ S, representation_results, FUN=mean)[2]
+)
+library(ggplot2)
+names(minmeanmax) <- c('S', 'min', 'mean', 'max', 'down', 'up', 'avelength')
+plot3 <- ggplot(minmeanmax, aes(x=S, y=mean, group = 1)) + geom_ribbon(aes(ymin = down, ymax = up), fill = fills[2-as.integer(both)]) + geom_line() + geom_line(linetype='dashed', aes(x=S, y=min, group = 1)) + geom_line(linetype='dashed', aes(x=S, y=max, group = 1)) + coord_cartesian(ylim=c(0,6), clip = 'off') + xlab('log(S)') + ylab('Group 1 seats')+ scale_x_discrete(limits = rev(levels(representation_results$S)))+ theme(aspect.ratio=1, plot.margin = unit(c(1.2,0,0.2,0), 'cm')) + geom_text(aes(y = 6.5, label = rev(round(avelength, digits=2)), x = rev(levels(representation_results$S))), size = 3, col = 'grey30') + geom_text(x=5.5, y=6.8, label = 'mean Group 1 ballot length') 
+
+if (both){
+  ggsave(paste('ribbon plots/ribbon', model, 'both.png', sep='_'), width=5, height=4.5)
+}else{
+  ggsave(paste('ribbon plots/ribbon', model, 'g1.png', sep='_'), width=5, height=4.5)
+}
+print(plot3)
+```
+
+```{r IT}
+model <- 'IT'
+both <- FALSE
+fills <- c('chartreuse4', 'chartreuse1') #both then g1
+
+if (both){
+  representation_results <- read.csv('./cluster_runs/IT_both_a 1 _ 0.3 _minority_scatterplot.csv')
+} else {
+    representation_results <- read.csv('./cluster_runs/IT_g1_a 1 _ 0.3 _minority_scatterplot.csv')
+}
+representation_results$S <- representation_results$scale
+representation_results$S <- as.factor(x=representation_results$S)
+minmeanmax <- cbind(
+  aggregate(group1wins ~ S, representation_results, FUN=min),
+  aggregate(group1wins ~ S, representation_results, FUN=mean)[2],
+  aggregate(group1wins ~ S, representation_results, FUN=max)[2],
+  aggregate(group1wins ~ S, representation_results, FUN=quantile, probs=0.05)[2],
+  aggregate(group1wins ~ S, representation_results, FUN=quantile, probs=0.95)[2],
+  aggregate(average_ballot_length_group1 ~ S, representation_results, FUN=mean)[2]
+)
+library(ggplot2)
+names(minmeanmax) <- c('S', 'min', 'mean', 'max', 'down', 'up', 'avelength')
+plot3 <- ggplot(minmeanmax, aes(x=S, y=mean, group = 1)) + geom_ribbon(aes(ymin = down, ymax = up), fill = fills[2-as.integer(both)]) + geom_line() + geom_line(linetype='dashed', aes(x=S, y=min, group = 1)) + geom_line(linetype='dashed', aes(x=S, y=max, group = 1)) + coord_cartesian(ylim=c(0,6), clip = 'off') + xlab('q') + ylab('Group 1 seats')+ scale_x_discrete(limits = (levels(representation_results$S)))+ theme(aspect.ratio=1, plot.margin = unit(c(1.2,0,0.2,0), 'cm')) + geom_text(aes(y = 6.5, label = (round(avelength, digits=2)), x = (levels(representation_results$S))), size = 3, col = 'grey30') + geom_text(x=5.5, y=6.8, label = 'mean Group 1 ballot length') 
+
+if (both){
+  ggsave(paste('ribbon plots/ribbon', model, 'both.png', sep='_'), width=5, height=4.5)
+}else{
+  ggsave(paste('ribbon plots/ribbon', model, 'g1.png', sep='_'), width=5, height=4.5)
+}
+
+print(plot3)
+```
+
+```{r FT}
+model <- 'FT'
+both <- TRUE
+fills <- c('darkcyan', 'cyan1') #both then g1
+
+
+if (both){
+  representation_results <- read.csv('./cluster_runs/FT_both_a 1 _ 0.3 _minority_scatterplot.csv')
+} else {
+    representation_results <- read.csv('./cluster_runs/FT_g1_a 1 _ 0.3 _minority_scatterplot.csv')
+}
+representation_results$S <- representation_results$truncation
+representation_results$S <- as.factor(x=representation_results$S)
+minmeanmax <- cbind(
+  aggregate(group1wins ~ S, representation_results, FUN=min),
+  aggregate(group1wins ~ S, representation_results, FUN=mean)[2],
+  aggregate(group1wins ~ S, representation_results, FUN=max)[2],
+  aggregate(group1wins ~ S, representation_results, FUN=quantile, probs=0.05)[2],
+  aggregate(group1wins ~ S, representation_results, FUN=quantile, probs=0.95)[2],
+  aggregate(average_ballot_length_group1 ~ S, representation_results, FUN=mean)[2]
+)
+library(ggplot2)
+names(minmeanmax) <- c('S', 'min', 'mean', 'max', 'down', 'up', 'avelength')
+plot3 <- ggplot(minmeanmax, aes(x=S, y=mean, group = 1)) + geom_ribbon(aes(ymin = down, ymax = up), fill = fills[2-as.integer(both)]) + geom_line() + geom_line(linetype='dashed', aes(x=S, y=min, group = 1)) + geom_line(linetype='dashed', aes(x=S, y=max, group = 1)) + coord_cartesian(ylim=c(0,6), clip = 'off') + xlab('ballot length') + ylab('Group 1 seats')+ scale_x_discrete(limits = (levels(representation_results$S)))+ theme(aspect.ratio=1, plot.margin = unit(c(1.2,0,0.2,0), 'cm')) + geom_text(aes(y = 6.5, label = '', x = (levels(representation_results$S))), size = 3, col = 'grey30') + geom_text(x=3.5, y=6.8, label = '') 
+
+if (both){
+  ggsave(paste('ribbon plots/ribbon', model, 'both.png', sep='_'), width=5, height=4.5)
+}else{
+  ggsave(paste('ribbon plots/ribbon', model, 'g1.png', sep='_'), width=5, height=4.5)
+}
+
+print(plot3)
+```
+
