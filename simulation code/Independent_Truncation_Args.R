@@ -20,7 +20,7 @@ minority <- as.numeric(args[3])
 set.seed(2021)
 num_simulations <- 100
 scales <- 1-10^(-seq(1,10)/5)
-global_shape <- 1.8
+global_shape <- 1.4
 
 print(paste('Running with minority = ', minority, ' and alpha = ', alpha))
 #initialize

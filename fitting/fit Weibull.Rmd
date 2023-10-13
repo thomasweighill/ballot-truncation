@@ -1,0 +1,37 @@
+---
+title: "Plotting cambridge ballots lengths and discrete weibull distributions"
+output: html_notebook
+---
+
+
+```{r}
+library('plyr')
+library(ggplot2)
+library(DiscreteWeibull)
+```
+
+```{r fitting}
+library(DiscreteWeibull)
+for (year in c('2007','2009','2011','2013','2015','2017')) {
+  orderings <- read.table(paste('../clustered ballots/Cambridge ',year,'orderings cluster 1.csv'), sep=',', header=TRUE)
+  orderings <- rbind(orderings, read.table(paste('../Cambridge',year,'orderings cluster 2.csv'), sep=',', header=TRUE))
+  first_choices <- orderings[1]
+  ballot_lengths <- rowSums(as.matrix((orderings != '') & !is.na(orderings)))
+  #ballot_lengths <- ballot_lengths[which(ballot_lengths<=9)]
+  out <- estdweibull(ballot_lengths, zero=FALSE)
+  C <- data.frame(table(ballot_lengths), stringsAsFactors=F)
+  C$color <- 'Cambridge data'
+  #p <- ggplot() + geom_line(data=C, aes(x=ballot_lengths,y=Freq, group=1, color='Cambridge data'))
+  D <- data.frame(ballot_lengths=C$ballot_lengths)
+  D$Freq <- ddweibull(as.double(D$ballot_lengths), out[1], out[2], zero=F)*length(ballot_lengths)
+  D$color <- 'Weibull estimate'
+  E <- rbind(C, D)
+  p <- ggplot() + geom_line(data=E, size=2, aes(x=ballot_lengths,y=Freq, group=color, color=color, linetype=color))
+  p <- p + xlab('ballot length') + ylab('freq') + theme(legend.position="none") 
+  print(p)
+  ggsave(paste('fit_vs_weibull_',year,'.png'))
+  print(paste(year,out))
+}
+
+```
+

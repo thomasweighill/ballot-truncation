@@ -19,7 +19,7 @@ minmeanmax <- cbind(
 )
 library(ggplot2)
 names(minmeanmax) <- c('S', 'min', 'mean', 'max', 'down', 'up', 'avelength')
-plot3 <- ggplot(minmeanmax, aes(x=S, y=mean, group = 1)) + geom_ribbon(aes(ymin = down, ymax = up), fill = fills[2-as.integer(both)]) + geom_line() + geom_line(linetype='dashed', aes(x=S, y=min, group = 1)) + geom_line(linetype='dashed', aes(x=S, y=max, group = 1)) + coord_cartesian(ylim=c(0,6), clip = 'off') + xlab('log(S)') + ylab('Group 1 seats')+ scale_x_discrete(limits = rev(levels(representation_results$S)))+ theme(aspect.ratio=1, plot.margin = unit(c(1.2,0,0.2,0), 'cm')) + geom_text(aes(y = 6.5, label = rev(round(avelength, digits=2)), x = rev(levels(representation_results$S))), size = 3, col = 'grey30') + geom_text(x=5.5, y=6.8, label = 'mean Group 1 ballot length') 
+plot3 <- ggplot(minmeanmax, aes(x=S, y=mean, group = 1)) + geom_ribbon(aes(ymin = down, ymax = up), fill = fills[2-as.integer(both)]) + geom_line() + geom_line(linetype='dashed', aes(x=S, y=min, group = 1)) + geom_line(linetype='dashed', aes(x=S, y=max, group = 1)) + coord_cartesian(ylim=c(0,6), clip = 'off') + xlab(expression(log(s[STOP]))) + ylab('Group 1 seats')+ scale_x_discrete(limits = rev(levels(representation_results$S)))+ theme(aspect.ratio=1, plot.margin = unit(c(1.2,0,0.2,0), 'cm')) + geom_text(aes(y = 6.5, label = rev(round(avelength, digits=2)), x = rev(levels(representation_results$S))), size = 3, col = 'grey30') + geom_text(x=5.5, y=6.8, label = 'mean Group 1 ballot length') + theme(axis.title = element_text(size=15))
 
 if (both){
   ggsave(paste('ribbon plots/ribbon', model, 'both.png', sep='_'), width=5, height=4.5)
@@ -31,7 +31,7 @@ print(plot3)
 
 ```{r IT}
 model <- 'IT'
-both <- FALSE
+both <- T
 fills <- c('chartreuse4', 'chartreuse1') #both then g1
 
 if (both){
@@ -51,7 +51,7 @@ minmeanmax <- cbind(
 )
 library(ggplot2)
 names(minmeanmax) <- c('S', 'min', 'mean', 'max', 'down', 'up', 'avelength')
-plot3 <- ggplot(minmeanmax, aes(x=S, y=mean, group = 1)) + geom_ribbon(aes(ymin = down, ymax = up), fill = fills[2-as.integer(both)]) + geom_line() + geom_line(linetype='dashed', aes(x=S, y=min, group = 1)) + geom_line(linetype='dashed', aes(x=S, y=max, group = 1)) + coord_cartesian(ylim=c(0,6), clip = 'off') + xlab('q') + ylab('Group 1 seats')+ scale_x_discrete(limits = (levels(representation_results$S)))+ theme(aspect.ratio=1, plot.margin = unit(c(1.2,0,0.2,0), 'cm')) + geom_text(aes(y = 6.5, label = (round(avelength, digits=2)), x = (levels(representation_results$S))), size = 3, col = 'grey30') + geom_text(x=5.5, y=6.8, label = 'mean Group 1 ballot length') 
+plot3 <- ggplot(minmeanmax, aes(x=S, y=mean, group = 1)) + geom_ribbon(aes(ymin = down, ymax = up), fill = fills[2-as.integer(both)]) + geom_line() + geom_line(linetype='dashed', aes(x=S, y=min, group = 1)) + geom_line(linetype='dashed', aes(x=S, y=max, group = 1)) + coord_cartesian(ylim=c(0,6), clip = 'off') + xlab('q') + ylab('Group 1 seats')+ scale_x_discrete(limits = (levels(representation_results$S)))+ theme(aspect.ratio=1, plot.margin = unit(c(1.2,0,0.2,0), 'cm')) + geom_text(aes(y = 6.5, label = (round(avelength, digits=2)), x = (levels(representation_results$S))), size = 3, col = 'grey30') + geom_text(x=5.5, y=6.8, label = 'mean Group 1 ballot length') + theme(axis.title = element_text(size=15))
 
 if (both){
   ggsave(paste('ribbon plots/ribbon', model, 'both.png', sep='_'), width=5, height=4.5)
@@ -64,7 +64,7 @@ print(plot3)
 
 ```{r FT}
 model <- 'FT'
-both <- TRUE
+both <- T
 fills <- c('darkcyan', 'cyan1') #both then g1
 
 
@@ -85,7 +85,7 @@ minmeanmax <- cbind(
 )
 library(ggplot2)
 names(minmeanmax) <- c('S', 'min', 'mean', 'max', 'down', 'up', 'avelength')
-plot3 <- ggplot(minmeanmax, aes(x=S, y=mean, group = 1)) + geom_ribbon(aes(ymin = down, ymax = up), fill = fills[2-as.integer(both)]) + geom_line() + geom_line(linetype='dashed', aes(x=S, y=min, group = 1)) + geom_line(linetype='dashed', aes(x=S, y=max, group = 1)) + coord_cartesian(ylim=c(0,6), clip = 'off') + xlab('ballot length') + ylab('Group 1 seats')+ scale_x_discrete(limits = (levels(representation_results$S)))+ theme(aspect.ratio=1, plot.margin = unit(c(1.2,0,0.2,0), 'cm')) + geom_text(aes(y = 6.5, label = '', x = (levels(representation_results$S))), size = 3, col = 'grey30') + geom_text(x=3.5, y=6.8, label = '') 
+plot3 <- ggplot(minmeanmax, aes(x=S, y=mean, group = 1)) + geom_ribbon(aes(ymin = down, ymax = up), fill = fills[2-as.integer(both)]) + geom_line() + geom_line(linetype='dashed', aes(x=S, y=min, group = 1)) + geom_line(linetype='dashed', aes(x=S, y=max, group = 1)) + coord_cartesian(ylim=c(0,6), clip = 'off') + xlab('ballot length') + ylab('Group 1 seats')+ scale_x_discrete(limits = (levels(representation_results$S)))+ theme(aspect.ratio=1, plot.margin = unit(c(1.2,0,0.2,0), 'cm')) + geom_text(aes(y = 6.5, label = '', x = (levels(representation_results$S))), size = 3, col = 'grey30') + geom_text(x=3.5, y=6.8, label = '') + theme(axis.title = element_text(size=15))
 
 if (both){
   ggsave(paste('ribbon plots/ribbon', model, 'both.png', sep='_'), width=5, height=4.5)
